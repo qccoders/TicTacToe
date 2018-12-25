@@ -13,31 +13,45 @@ var reader = bufio.NewReader(os.Stdin)
 
 func main() {
 	for {
+		fmt.Println("Welcome to QC Coders' Tic Tac Toe! You're 'X' and you'll go first.")
 		initBoard()
-		printBoard()
 
-		input, err := reader.ReadString('\n')
-		input = strings.TrimSuffix(input, "\n")
+		for {
+			fmt.Println("\nHere's the current board:\n")
+			printBoard()
+			fmt.Println("\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):")
 
-		parts := strings.Split(input, ",")
+			input, err := reader.ReadString('\n')
+			input = strings.TrimSuffix(input, "\n")
 
-		if err != nil || len(parts) != 2 {
-			fmt.Println("\nInvalid input! try again.")
-			continue
+			parts := strings.Split(input, ",")
+
+			if err != nil || len(parts) != 2 {
+				fmt.Println("\nInvalid input! try again.")
+				continue
+			}
+
+			x, err := strconv.ParseInt(parts[0], 10, 32)
+
+			if err != nil {
+				fmt.Println("\nInvalid input! try again.")
+				continue
+			}
+
+			y, err := strconv.ParseInt(parts[1], 10, 32)
+
+			if err != nil || x < 0 || x > 2 || y < 0 || y > 2 {
+				fmt.Println("\nInvalid input! try again.")
+				continue
+			}
+
+			if board[y][x] != ' ' {
+				fmt.Println("\nThat cell is already selected.")
+				continue
+			}
+
+			board[y][x] = 'X'
 		}
-
-		fmt.Println(parts)
-
-		x, err := strconv.ParseInt(parts[0], 10, 32)
-		y, err := strconv.ParseInt(parts[1], 10, 32)
-
-		if err != nil || x < 0 || x > 2 || y < 0 || y > 2 {
-			fmt.Println(err)
-			fmt.Println("\nInvalid input! try again.")
-			continue
-		}
-
-		fmt.Println(input)
 	}
 }
 
