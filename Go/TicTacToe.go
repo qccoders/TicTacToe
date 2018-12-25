@@ -65,17 +65,22 @@ func main() {
 		}
 
 		if getWinner() == 'Z' {
-			fmt.Println("The game was a draw!")
+			fmt.Println("\nThe game was a draw!")
 		} else if getWinner() == 'X' {
-			fmt.Println("You're the winner!")
+			fmt.Println("\nYou're the winner!")
 		} else {
-			fmt.Println("The computer is the winner!")
+			fmt.Println("\nThe computer is the winner!")
 		}
 
 		fmt.Println("Here's the final board:\n")
 		printBoard()
 
 		fmt.Println("\nPress Enter to play again or x + Enter to exit.")
+		input, _ := reader.ReadString('\n')
+
+		if input != "\n" {
+			break
+		}
 	}
 }
 
