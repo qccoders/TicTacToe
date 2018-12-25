@@ -87,6 +87,33 @@ func getAvailableCells() [][]int {
 }
 
 func getWinner() byte {
+	combos := [][][]int{
+		[][]int{[]int{0, 0}, []int{0, 1}, []int{0, 2}},
+		[][]int{[]int{1, 0}, []int{1, 1}, []int{1, 2}},
+		[][]int{[]int{2, 0}, []int{2, 1}, []int{2, 2}},
+		[][]int{[]int{0, 0}, []int{1, 0}, []int{2, 0}},
+		[][]int{[]int{0, 1}, []int{1, 1}, []int{2, 1}},
+		[][]int{[]int{0, 2}, []int{1, 2}, []int{2, 2}},
+		[][]int{[]int{0, 0}, []int{1, 1}, []int{2, 2}},
+		[][]int{[]int{2, 0}, []int{1, 1}, []int{0, 2}},
+	}
+
+	for i := 0; i < 8; i++ {
+		combo := []byte{' ', ' ', ' '}
+
+		for j := 0; j < 3; j++ {
+			combo[j] = board[combos[i][j][1]][combos[i][j][0]]
+		}
+
+		if combo[0] != ' ' && combo[0] == combo[1] && combo[1] == combo[2] {
+			return combo[0]
+		}
+	}
+
+	if len(getAvailableCells()) == 0 {
+		return 'Z'
+	}
+
 	return 0x0
 }
 
