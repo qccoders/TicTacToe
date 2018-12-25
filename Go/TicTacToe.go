@@ -51,8 +51,43 @@ func main() {
 			}
 
 			board[y][x] = 'X'
+			if getWinner() != 0x0 {
+				break
+			}
+
+			fmt.Println("\nComputer is taking its turn...")
+			doComputersTurn()
+
+			if getWinner() != 0x0 {
+				break
+			}
 		}
+
+		if getWinner() == 'Z' {
+			fmt.Println("The game was a draw!")
+		} else if getWinner() == 'X' {
+			fmt.Println("You're the winner!")
+		} else {
+			fmt.Println("The computer is the winner!")
+		}
+
+		fmt.Println("Here's the final board:\n")
+		printBoard()
+
+		fmt.Println("\nPress Enter to play again or x + Enter to exit.")
 	}
+}
+
+func doComputersTurn() {
+
+}
+
+func getAvailableCells() [][]int {
+	return make([][]int, 0)
+}
+
+func getWinner() byte {
+	return 0x0
 }
 
 func printBoard() {
