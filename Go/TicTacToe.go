@@ -1,12 +1,44 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
 
 var board [][]byte
+var reader = bufio.NewReader(os.Stdin)
 
 func main() {
-	initBoard()
-	printBoard()
+	for {
+		initBoard()
+		printBoard()
+
+		input, err := reader.ReadString('\n')
+		input = strings.TrimSuffix(input, "\n")
+
+		parts := strings.Split(input, ",")
+
+		if err != nil || len(parts) != 2 {
+			fmt.Println("\nInvalid input! try again.")
+			continue
+		}
+
+		fmt.Println(parts)
+
+		x, err := strconv.ParseInt(parts[0], 10, 32)
+		y, err := strconv.ParseInt(parts[1], 10, 32)
+
+		if err != nil || x < 0 || x > 2 || y < 0 || y > 2 {
+			fmt.Println(err)
+			fmt.Println("\nInvalid input! try again.")
+			continue
+		}
+
+		fmt.Println(input)
+	}
 }
 
 func printBoard() {
@@ -23,6 +55,8 @@ func printBoard() {
 			fmt.Println("\n-+-+-")
 		}
 	}
+
+	fmt.Println()
 }
 
 func initBoard() {
