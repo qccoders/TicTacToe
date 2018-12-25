@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TicTacToe.NET
 {
@@ -39,23 +40,55 @@ namespace TicTacToe.NET
                     continue;
                 }
 
-                if (!IsCellAvailable(x, y))
+                if (board[y, x] != ' ')
                 {
                     Console.WriteLine(Environment.NewLine + "That cell is already selected.");
                     continue;
                 }
 
                 board[y, x] = 'X';
+                if (GetWinner() != null) break;
 
+                Console.WriteLine(Environment.NewLine + "Computer is taking its turn...");
+                DoComputersTurn();
             } while (GetWinner() == null);
 
-            Console.WriteLine($"{Environment.NewLine}{GetWinner()} is the winner! Here's the final board:{Environment.NewLine}");
+            if (GetWinner() == 'Z')
+            {
+                Console.WriteLine("The game was a draw!");
+            }
+            else
+            {
+                Console.WriteLine($"{Environment.NewLine}{(GetWinner() == 'X' ? "you\'re" : "the computer is")} the winner!");
+            }
+
+            Console.WriteLine("Here's the final board:" + Environment.NewLine);
             PrintBoard();
         }
 
-        static bool IsCellAvailable(int x, int y)
+        static void DoComputersTurn()
         {
-            return board[y, x] == ' ';
+            var availableCells = GetAvailableCells();
+            var randomCell = availableCells[new Random().Next(0, availableCells.Count)];
+            board[randomCell.Item2, randomCell.Item1] = 'O';
+        }
+
+        static List<Tuple<int, int>> GetAvailableCells()
+        {
+            var availableCells = new List<Tuple<int, int>>();
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (board[j, i] == ' ')
+                    {
+                        availableCells.Add(new Tuple<int, int>(i, j));
+                    }
+                }
+            }
+
+            return availableCells;
         }
 
         static char? GetWinner()
@@ -86,7 +119,7 @@ namespace TicTacToe.NET
                 }
             }
 
-            return null;
+            return GetAvailableCells().Count == 0 ? 'Z' : (char?)null;
         }
 
         static void PrintBoard()
