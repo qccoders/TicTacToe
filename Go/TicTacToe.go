@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math/rand"
 	"os"
 	"strconv"
 	"strings"
@@ -79,7 +80,9 @@ func main() {
 }
 
 func doComputersTurn() {
-
+	availableCells := getAvailableCells()
+	randomCell := availableCells[rand.Intn(len(availableCells))]
+	board[randomCell[1]][randomCell[0]] = 'O'
 }
 
 func getAvailableCells() [][]int {
