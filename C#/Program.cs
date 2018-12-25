@@ -57,11 +57,11 @@ namespace TicTacToe.NET
 
                 if (GetWinner() == 'Z')
                 {
-                    Console.WriteLine("The game was a draw!");
+                    Console.WriteLine(Environment.NewLine + "The game was a draw!");
                 }
                 else
                 {
-                    Console.WriteLine($"{Environment.NewLine}{(GetWinner() == 'X' ? "you\'re" : "the computer is")} the winner!");
+                    Console.WriteLine($"{Environment.NewLine}{(GetWinner() == 'X' ? "You\'re" : "The computer is")} the winner!");
                 }
 
                 Console.WriteLine("Here's the final board:" + Environment.NewLine);
