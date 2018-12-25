@@ -83,7 +83,17 @@ func doComputersTurn() {
 }
 
 func getAvailableCells() [][]int {
-	return make([][]int, 0)
+	availableCells := make([][]int, 0)
+
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 3; j++ {
+			if board[j][i] == ' ' {
+				availableCells = append(availableCells, []int{i, j})
+			}
+		}
+	}
+
+	return availableCells
 }
 
 func getWinner() byte {
