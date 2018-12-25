@@ -9,61 +9,65 @@ namespace TicTacToe.NET
 
         static void Main(string[] args)
         {
-            Console.WriteLine($"Welcome to QC Coders' Tic Tac Toe! You're 'X' and you'll go first.");
-
-            InitBoard();
-
             do
             {
-                Console.WriteLine(Environment.NewLine + "Here's the current board:" + Environment.NewLine);
-                PrintBoard();
-                Console.WriteLine(Environment.NewLine + "Enter your choice in the format 'x,y' (zero based, left to right, top to bottom):");
+                Console.WriteLine($"Welcome to QC Coders' Tic Tac Toe! You're 'X' and you'll go first.");
+                InitBoard();
 
-                var input = Console.ReadLine();
-                int x, y;
-
-                try
+                do
                 {
-                    var nums = input.Split(',');
+                    Console.WriteLine(Environment.NewLine + "Here's the current board:" + Environment.NewLine);
+                    PrintBoard();
+                    Console.WriteLine(Environment.NewLine + "Enter your choice in the format 'x,y' (zero based, left to right, top to bottom):");
 
-                    x = int.Parse(nums[0]);
-                    y = int.Parse(nums[1]);
+                    var input = Console.ReadLine();
+                    int x, y;
 
-                    if (x < 0 || x > 2 || y < 0 || y > 2)
+                    try
                     {
-                        throw new ArgumentException();
+                        var nums = input.Split(',');
+
+                        x = int.Parse(nums[0]);
+                        y = int.Parse(nums[1]);
+
+                        if (x < 0 || x > 2 || y < 0 || y > 2)
+                        {
+                            throw new ArgumentException();
+                        }
                     }
-                }
-                catch (Exception)
+                    catch (Exception)
+                    {
+                        Console.WriteLine(Environment.NewLine + "Invalid input!  Try again.");
+                        continue;
+                    }
+
+                    if (board[y, x] != ' ')
+                    {
+                        Console.WriteLine(Environment.NewLine + "That cell is already selected.");
+                        continue;
+                    }
+
+                    board[y, x] = 'X';
+                    if (GetWinner() != null) break;
+
+                    Console.WriteLine(Environment.NewLine + "Computer is taking its turn...");
+                    DoComputersTurn();
+                } while (GetWinner() == null);
+
+                if (GetWinner() == 'Z')
                 {
-                    Console.WriteLine(Environment.NewLine + "Invalid input!  Try again.");
-                    continue;
+                    Console.WriteLine("The game was a draw!");
                 }
-
-                if (board[y, x] != ' ')
+                else
                 {
-                    Console.WriteLine(Environment.NewLine + "That cell is already selected.");
-                    continue;
+                    Console.WriteLine($"{Environment.NewLine}{(GetWinner() == 'X' ? "you\'re" : "the computer is")} the winner!");
                 }
 
-                board[y, x] = 'X';
-                if (GetWinner() != null) break;
+                Console.WriteLine("Here's the final board:" + Environment.NewLine);
+                PrintBoard();
 
-                Console.WriteLine(Environment.NewLine + "Computer is taking its turn...");
-                DoComputersTurn();
-            } while (GetWinner() == null);
-
-            if (GetWinner() == 'Z')
-            {
-                Console.WriteLine("The game was a draw!");
-            }
-            else
-            {
-                Console.WriteLine($"{Environment.NewLine}{(GetWinner() == 'X' ? "you\'re" : "the computer is")} the winner!");
-            }
-
-            Console.WriteLine("Here's the final board:" + Environment.NewLine);
-            PrintBoard();
+                Console.WriteLine(Environment.NewLine + "Press Enter to play again or x + Enter to exit.");
+            } while (Console.Read() == 10);
         }
 
         static void DoComputersTurn()
