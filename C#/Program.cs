@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TicTacToe.NET
 {
     class Program
     {
-        static char[,] board;
+        static char[][] board;
 
         static void Main(string[] args)
         {
@@ -41,13 +42,13 @@ namespace TicTacToe.NET
                         continue;
                     }
 
-                    if (board[y, x] != ' ')
+                    if (board[y][x] != ' ')
                     {
                         Console.WriteLine(Environment.NewLine + "That cell is already selected.");
                         continue;
                     }
 
-                    board[y, x] = 'X';
+                    board[y][x] = 'X';
                     if (GetWinner() != null) break;
 
                     Console.WriteLine(Environment.NewLine + "Computer is taking its turn...");
@@ -73,11 +74,11 @@ namespace TicTacToe.NET
         static void DoComputersTurn()
         {
             var availableCells = GetAvailableCells();
-            var randomCell = availableCells[new Random().Next(0, availableCells.Count)];
-            board[randomCell.Item2, randomCell.Item1] = 'O';
+            var randomCell = availableCells[new Random().Next(0, availableCells.Length)];
+            board[randomCell[1]][randomCell[0]] = 'O';
         }
 
-        static List<Tuple<int, int>> GetAvailableCells()
+        static int[][] GetAvailableCells()
         {
             var availableCells = new List<Tuple<int, int>>();
 
@@ -85,14 +86,14 @@ namespace TicTacToe.NET
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if (board[j, i] == ' ')
+                    if (board[j][i] == ' ')
                     {
                         availableCells.Add(new Tuple<int, int>(i, j));
                     }
                 }
             }
 
-            return availableCells;
+            return availableCells.Select(c => new int[2] { c.Item1, c.Item2 }).ToArray();
         }
 
         static char? GetWinner()
@@ -114,7 +115,7 @@ namespace TicTacToe.NET
 
                 for (int j = 0; j < 3; j++)
                 {
-                    combo[j] = board[combos[i, j, 1], combos[i, j, 0]];
+                    combo[j] = board[combos[i, j, 1]][combos[i, j, 0]];
                 }
 
                 if (combo[0] != ' ' && combo[0] == combo[1] && combo[1] == combo[2])
@@ -123,7 +124,7 @@ namespace TicTacToe.NET
                 }
             }
 
-            return GetAvailableCells().Count == 0 ? 'Z' : (char?)null;
+            return GetAvailableCells().Length == 0 ? 'Z' : (char?)null;
         }
 
         static void PrintBoard()
@@ -132,7 +133,7 @@ namespace TicTacToe.NET
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    Console.Write(board[i, j] + (j < 2 ? "|" : Environment.NewLine));
+                    Console.Write(board[i][j] + (j < 2 ? "|" : Environment.NewLine));
                 }
 
                 if (i < 2)
@@ -144,10 +145,10 @@ namespace TicTacToe.NET
 
         static void InitBoard()
         {
-            board = new char[3, 3] {
-                { ' ', ' ', ' ' },
-                { ' ', ' ', ' ' },
-                { ' ', ' ', ' ' },
+            board = new char[3][] {
+                new char[3] { ' ', ' ', ' ' },
+                new char[3] { ' ', ' ', ' ' },
+                new char[3] { ' ', ' ', ' ' },
             };
         }
     }
