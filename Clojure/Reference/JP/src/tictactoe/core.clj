@@ -10,26 +10,17 @@
       (vector \  \  \ )
       (vector \  \  \ ))))
 
-
-(defn cell-printer [i cell]
-  (print cell)
-  (print (if (< i 2) "|" "")))
-
-
-(defn row-printer [i row]
-  (doall (map-indexed cell-printer row))
-  (if (< i 2) (println "\n-+-+-")))
-
-
 (defn printboard []
-  (doall (map-indexed row-printer board)))
+  (doseq [[i row] (map-indexed vector board)] 
+    (doseq [[i cell] (map-indexed vector row)]
+      (print cell)
+      (print (if (< i 2) "|" "")))
 
+    (if (< i 2) (println "\n-+-+-"))))
 
-(defn go [& args]
+(defn -main [& args]
   (println "Welcome to QC Coders' Tic Tac Toe! You're 'X' and you'll go first.")
   (initboard)
   (println "\nHere's the current board:\n")
   (printboard)
   (println "\n\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):"))
-
-(defn -main [& args] (apply go args))
