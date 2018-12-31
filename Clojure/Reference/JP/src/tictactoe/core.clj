@@ -11,7 +11,7 @@
       (vector \  \  \ ))))
 
 (defn getWinner []
-  \X)
+  \O)
 
 (defn printboard []
   (doseq [[i row] (map-indexed vector board)] 
@@ -48,11 +48,19 @@
         (System/exit 0))
 
       (def board (assoc-in board [y x] \X))
-      (if (= (getWinner) nil)
-        (recur)
-        (do 
-          (println "Here's the final board:") 
-          (printboard))))
+    
+      (when (= (getWinner) nil)
+        (recur)))
+
+    (when (= (getWinner) \X)
+      (println "You're the winner!"))
+    (when (= (getWinner) \O)
+      (println "The computer is the winner!"))
+    (when (= (getWinner) \Z)
+      (println "The game was a draw!"))
+
+    (println "Here's the final board:") 
+    (printboard)
 
     (println "\nPress Enter to play again or x + Enter to exit.")
     (def input (read-line))
