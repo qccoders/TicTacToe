@@ -1,12 +1,6 @@
 (ns tictactoe.core
   (:gen-class))
 
-; supporting stuff not included in the reference implementation
-(defn exit []
-  (println "Invalid input!  Try again.")
-  (System/exit 0))
-
-; begin reference implementation
 (def board nil)
 
 (defn initboard []
@@ -37,10 +31,11 @@
   (def x (clojure.edn/read-string (get coords 0)))
   (def y (clojure.edn/read-string (get coords 1)))
 
-  (when (< x 0) (exit))
-  (when (> x 2) (exit))
-  (when (< y 0) (exit))
-  (when (> y 2) (exit))
+  (when 
+    (or 
+      (< x 0) (> x 2) (< y 0) (> y 2)) 
+        (println "Invalid input!  Try again.")
+        (System/exit 0))
 
   (println "Your input looks valid so far..."))
 
