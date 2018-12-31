@@ -13,6 +13,8 @@
 (defn getWinner []
   \O)
 
+(defn doComputersTurn [] nil)
+
 (defn printboard []
   (doseq [[i row] (map-indexed vector board)] 
     (doseq [[i cell] (map-indexed vector row)]
@@ -48,9 +50,11 @@
         (System/exit 0))
 
       (def board (assoc-in board [y x] \X))
-    
+
       (when (= (getWinner) nil)
-        (recur)))
+        (doComputersTurn)
+        (when (= (getWinner) nil)
+          (recur))))
 
     (when (= (getWinner) \X)
       (println "You're the winner!"))
