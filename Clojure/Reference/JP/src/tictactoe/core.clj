@@ -11,7 +11,7 @@
       (vector \  \  \ ))))
 
 (defn getWinner []
-  nil)
+  \X)
 
 (defn printboard []
   (doseq [[i row] (map-indexed vector board)] 
@@ -47,5 +47,7 @@
       (System/exit 0))
 
     (def board (assoc-in board [y x] \X))
-    (recur)))
+    (if (= (getWinner) nil)
+      (recur)
+      (println "Game over"))))
 
