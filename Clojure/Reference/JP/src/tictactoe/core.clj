@@ -37,5 +37,9 @@
         (println "Invalid input!  Try again.")
         (System/exit 0))
 
-  (println "Your input looks valid so far..."))
+  (when (not= (get-in board [y x]) \ )
+    (println "That cell is already selected.")
+    (System/exit 0))
+
+  (def board (assoc-in board [y x] \X)))
 
