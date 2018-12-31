@@ -23,4 +23,6 @@
   (initboard)
   (println "\nHere's the current board:\n")
   (printboard)
-  (println "\n\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):"))
+  (println "\n\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):")
+  (def input (read-line))
+  (println input))
