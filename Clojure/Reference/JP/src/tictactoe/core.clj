@@ -10,6 +10,9 @@
       (vector \  \  \ )
       (vector \  \  \ ))))
 
+(defn getWinner []
+  nil)
+
 (defn printboard []
   (doseq [[i row] (map-indexed vector board)] 
     (doseq [[i cell] (map-indexed vector row)]
@@ -21,25 +24,28 @@
 (defn -main [& args]
   (println "Welcome to QC Coders' Tic Tac Toe! You're 'X' and you'll go first.")
   (initboard)
-  (println "\nHere's the current board:\n")
-  (printboard)
 
-  (println "\n\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):")
-  (def input (read-line))
-  (def coords (clojure.string/split input #","))
+  (loop []
+    (println "\nHere's the current board:\n")
+    (printboard)
 
-  (def x (clojure.edn/read-string (get coords 0)))
-  (def y (clojure.edn/read-string (get coords 1)))
+    (println "\n\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):")
+    (def input (read-line))
+    (def coords (clojure.string/split input #","))
 
-  (when 
-    (or 
-      (< x 0) (> x 2) (< y 0) (> y 2)) 
-        (println "Invalid input!  Try again.")
-        (System/exit 0))
+    (def x (clojure.edn/read-string (get coords 0)))
+    (def y (clojure.edn/read-string (get coords 1)))
 
-  (when (not= (get-in board [y x]) \ )
-    (println "That cell is already selected.")
-    (System/exit 0))
+    (when 
+      (or 
+        (< x 0) (> x 2) (< y 0) (> y 2)) 
+          (println "Invalid input!  Try again.")
+          (System/exit 0))
 
-  (def board (assoc-in board [y x] \X)))
+    (when (not= (get-in board [y x]) \ )
+      (println "That cell is already selected.")
+      (System/exit 0))
+
+    (def board (assoc-in board [y x] \X))
+    (recur)))
 
