@@ -7,7 +7,7 @@
   (def board 
     (vector 
       (vector \  \  \ )
-      (vector \  \  \ )
+      (vector \  \X \ )
       (vector \  \  \ ))))
 
 (defn getWinner []
@@ -29,25 +29,27 @@
     (initboard)
 
     (loop []
-      (println "\nHere's the current board:\n")
-      (printboard)
+      (loop []
+        (loop []
+          (println "\nHere's the current board:\n")
+          (printboard)
 
-      (println "\n\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):")
-      (def input (read-line))
-      (def coords (clojure.string/split input #","))
+          (println "\n\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):")
+          (def input (read-line))
+          (def coords (clojure.string/split input #","))
 
-      (def x (clojure.edn/read-string (get coords 0)))
-      (def y (clojure.edn/read-string (get coords 1)))
+          (def x (clojure.edn/read-string (get coords 0)))
+          (def y (clojure.edn/read-string (get coords 1)))
 
-      (when 
-        (or 
-          (< x 0) (> x 2) (< y 0) (> y 2)) 
-            (println "Invalid input!  Try again.")
-            (System/exit 0))
+          (when 
+            (or 
+              (< x 0) (> x 2) (< y 0) (> y 2)) 
+                (println "Invalid input!  Try again.")
+                (recur)))
 
-      (when (not= (get-in board [y x]) \ )
-        (println "That cell is already selected.")
-        (System/exit 0))
+        (when (not= (get-in board [y x]) \ )
+          (println "That cell is already selected.")
+          (recur)))
 
       (def board (assoc-in board [y x] \X))
 
