@@ -11,7 +11,16 @@
       (vector \  \  \ ))))
 
 (defn getWinner []
-  \O)
+  (def combos 
+    (vector
+      (vector (vector 0 0) (vector 0 1) (vector 0 2))
+      (vector (vector 1 0) (vector 1 1) (vector 1 2))
+      (vector (vector 2 0) (vector 2 1) (vector 2 2))
+      (vector (vector 0 0) (vector 1 0) (vector 2 0))
+      (vector (vector 0 1) (vector 1 1) (vector 2 1))
+      (vector (vector 0 2) (vector 1 2) (vector 2 2))
+      (vector (vector 0 0) (vector 1 1) (vector 2 2))
+      (vector (vector 2 0) (vector 1 1) (vector 0 2))))
 
 (defn doComputersTurn [] nil)
 
