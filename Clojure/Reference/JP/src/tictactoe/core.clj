@@ -42,8 +42,25 @@
       
   winner)
 
+(defn getAvailableCells []
+  (def availableCells nil)
+  (loop [i 0]
+    (loop [j 0]
+      (when (= \  (get-in board [j i]))
+        (def availableCells (conj availableCells [i j])))
+      (when (< j 2) 
+        (recur (inc j))))
+    (when (< i 2) 
+      (recur (inc i))))
 
-(defn doComputersTurn [] nil)
+    (println availableCells)
+    availableCells)
+
+(defn doComputersTurn [] 
+  (def randomCell (rand-nth (getAvailableCells)))
+  (println randomCell)
+  (def board 
+    (assoc-in board [(get-in randomCell [1]) (get-in randomCell [0])] \O)))
 
 (defn printboard []
   (doseq [[i row] (map-indexed vector board)] 
@@ -84,6 +101,7 @@
       (def board (assoc-in board [y x] \X))
 
       (when (= (getWinner) nil)
+        (println "Computer is taking its turn...")
         (doComputersTurn)
         (when (= (getWinner) nil)
           (recur))))
@@ -102,6 +120,4 @@
     (def input (read-line))
     (if (= "" input)
       (recur)
-      (System/exit 0)))
-)
-
+      (System/exit 0))))
