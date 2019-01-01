@@ -10,6 +10,19 @@
       (vector \  \  \ )
       (vector \  \  \ ))))
 
+(defn getAvailableCells []
+  (def availableCells nil)
+  (loop [i 0]
+    (loop [j 0]
+      (when (= \  (get-in board [j i]))
+        (def availableCells (conj availableCells [i j])))
+      (when (< j 2) 
+        (recur (inc j))))
+    (when (< i 2) 
+      (recur (inc i))))
+
+    availableCells)
+
 (defn getWinner []
   (def combos 
     (vector
@@ -39,21 +52,9 @@
 
     (when (< i 7)
       (recur (inc i))))
-      
-  winner)
 
-(defn getAvailableCells []
-  (def availableCells nil)
-  (loop [i 0]
-    (loop [j 0]
-      (when (= \  (get-in board [j i]))
-        (def availableCells (conj availableCells [i j])))
-      (when (< j 2) 
-        (recur (inc j))))
-    (when (< i 2) 
-      (recur (inc i))))
-
-    availableCells)
+  (if (not= nil winner) winner     
+    (if (= nil (getAvailableCells)) \Z nil)))
 
 (defn doComputersTurn [] 
   (def randomCell (rand-nth (getAvailableCells)))
