@@ -7,7 +7,7 @@
   (def board 
     (vector 
       (vector \  \  \ )
-      (vector \  \X \ )
+      (vector \  \  \ )
       (vector \  \  \ ))))
 
 (defn getWinner []
@@ -21,6 +21,27 @@
       (vector (vector 0 2) (vector 1 2) (vector 2 2))
       (vector (vector 0 0) (vector 1 1) (vector 2 2))
       (vector (vector 2 0) (vector 1 1) (vector 0 2))))
+    
+  (def winner nil)
+
+  (loop [i 0]
+    (def combo (vector \ \ \ ))
+    (loop [j 0]
+      (def combo 
+        (assoc-in combo [j] 
+          (get-in board [(get-in combos [i j 1]) (get-in combos [i j 0])])))
+      (when (< j 2)
+        (recur (inc j))))
+
+      (when (not= \ (get-in combo [0]))
+        (when (and (= (get-in combo [0]) (get-in combo [1])) (= (get-in combo [1]) (get-in combo [2])))
+          (def winner (get-in combo [0]))))
+
+    (when (< i 7)
+      (recur (inc i))))
+      
+  winner)
+
 
 (defn doComputersTurn [] nil)
 
