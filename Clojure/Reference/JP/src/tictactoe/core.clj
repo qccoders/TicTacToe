@@ -53,12 +53,10 @@
     (when (< i 2) 
       (recur (inc i))))
 
-    (println availableCells)
     availableCells)
 
 (defn doComputersTurn [] 
   (def randomCell (rand-nth (getAvailableCells)))
-  (println randomCell)
   (def board 
     (assoc-in board [(get-in randomCell [1]) (get-in randomCell [0])] \O)))
 
@@ -101,22 +99,22 @@
       (def board (assoc-in board [y x] \X))
 
       (when (= (getWinner) nil)
-        (println "Computer is taking its turn...")
+        (println "\nComputer is taking its turn...")
         (doComputersTurn)
         (when (= (getWinner) nil)
           (recur))))
 
     (when (= (getWinner) \X)
-      (println "You're the winner!"))
+      (println "\nYou're the winner!"))
     (when (= (getWinner) \O)
-      (println "The computer is the winner!"))
+      (println "\nThe computer is the winner!"))
     (when (= (getWinner) \Z)
-      (println "The game was a draw!"))
+      (println "\nThe game was a draw!"))
 
-    (println "Here's the final board:") 
+    (println "Here's the final board:\n") 
     (printboard)
 
-    (println "\nPress Enter to play again or x + Enter to exit.")
+    (println "\n\nPress Enter to play again or x + Enter to exit.")
     (def input (read-line))
     (if (= "" input)
       (recur)
