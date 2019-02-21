@@ -8,7 +8,7 @@ enum TicTacToeError: Error {
 class Program {
     static var board: [[Character]] = []
 
-    static func main() {
+    static func Main() {
         repeat {
             print("Welcome to QC Coders' Tic Tac Toe! You're 'X' and you'll go first.")
             InitBoard()
@@ -141,4 +141,4 @@ class Program {
     }
 }
 
-Program.main()
+Program.Main()
