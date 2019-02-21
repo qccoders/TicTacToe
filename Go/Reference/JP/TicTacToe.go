@@ -23,7 +23,7 @@ func main() {
 			fmt.Println("\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom):")
 
 			input, err := reader.ReadString('\n')
-			input = strings.TrimSuffix(input, "\n")
+			input = strings.TrimSuffix(input, "\r\n")
 
 			parts := strings.Split(input, ",")
 
