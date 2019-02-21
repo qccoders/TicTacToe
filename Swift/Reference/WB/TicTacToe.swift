@@ -6,7 +6,7 @@ enum TicTacToeError: Error {
 }
 
 class Program {
-    static var board: [[Character]]
+    static var board: [[Character]] = []
 
     static func Main() {
         repeat {
