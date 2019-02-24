@@ -1,64 +1,76 @@
 const readline = require('readline');
 
-const stdin = readline.createInterface({
+const turnReader = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
   
 var board = [[]];
 
-function read(prompt) {
-    let input;
-    stdin.question(prompt, answer => input = answer);
-    return input;
-}
-
 main();
 
 function main() {
-    do {
-        console.log("Welcome to QC Coders' Tic TacToe! You're 'X' and you'll go first.");
-        initBoard();
+    console.log("Welcome to QC Coders' Tic TacToe! You're 'X' and you'll go first.");
+    initBoard();
 
-        do {
-            console.log("\nHere's the current board:\n");
-            printBoard();
-            console.log("\n");
+    let takeTurn = () => { 
+        console.log("\nHere's the current board:\n");
+        printBoard();
+        console.log("\n");
 
-            let input = "1,1";
-            //stdin.question("Enter your choice in the format 'x,y' (zero based, left to right, top to bottom):", answer => input = answer);
-
+        turnReader.question("Enter your choice in the format 'x,y' (zero based, left to right, top to bottom): ", answer => {
             let x, y;
 
             try {
-                let nums = input.split(",");
+                let nums = answer.split(",");
 
                 x = parseInt(nums[0]);
                 y = parseInt(nums[1]);
-
-                console.log(x, y);
 
                 if (x < 0 || x > 2 || y < 0 || y > 2)
                 {
                     throw "Invalid input! Try again.";
                 }
-
-                if (board[y][x] !== ' ') {
-                    throw "That cell is already selected";
-                }
-
-                board[y][x] = 'X';
-
-                doComputersTurn();
-
-                printBoard();
             } catch(err) {
                 console.log(err);
+                takeTurn();
             }
-        } while (getWinner() !== null);
-    } while (read("Press Enter to play again or x + Enter to exit.") === "yes");
+            
+            if (board[y][x] !== ' ') {
+                console.log("That cell is already selected.");
+                takeTurn();
+            }
 
-    stdin.close();
+            board[y][x] = 'X';
+
+            let gameOver = () => {
+                if (getWinner() === 'Z') {
+                    console.log("The game was a draw!");
+                } else {
+                    console.log((getWinner() === 'X' ? "You're" : "The computer is") + " the winner!");
+                }
+
+                console.log("Here's the final board: \n");
+                printBoard();
+                turnReader.close();
+            }
+
+            if (getWinner() !== 'X') {
+                console.log("Computer is taking its turn...");
+                doComputersTurn();
+    
+                if (getWinner() === null) {
+                    takeTurn();
+                } else {
+                    gameOver();
+                }
+            } else {
+                gameOver();
+            }
+        });
+    }
+
+    takeTurn();
 };
 
 function doComputersTurn() {
