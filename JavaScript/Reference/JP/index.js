@@ -1,76 +1,57 @@
-const readline = require('readline');
+const readline = require('readline-sync');
 
-const turnReader = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-  
 var board = [[]];
 
 main();
 
 function main() {
-    console.log("Welcome to QC Coders' Tic TacToe! You're 'X' and you'll go first.");
-    initBoard();
+    do {
+        console.log("Welcome to QC Coders' Tic TacToe! You're 'X' and you'll go first.");
+        initBoard();
+    
+        do {
+            console.log("\nHere's the current board:\n");
+            printBoard();
 
-    let takeTurn = () => { 
-        console.log("\nHere's the current board:\n");
-        printBoard();
-        console.log("\n");
-
-        turnReader.question("Enter your choice in the format 'x,y' (zero based, left to right, top to bottom): ", answer => {
+            var input = readline.question("\nEnter your choice in the format 'x,y' (zero based, left to right, top to bottom): ");        
             let x, y;
-
+        
             try {
-                let nums = answer.split(",");
-
+                let nums = input.split(",");
+        
                 x = parseInt(nums[0]);
                 y = parseInt(nums[1]);
-
-                if (x < 0 || x > 2 || y < 0 || y > 2)
+       
+                if (isNaN(x) || isNaN(y) || x < 0 || x > 2 || y < 0 || y > 2)
                 {
-                    throw "Invalid input! Try again.";
+                    throw "\nInvalid input! Try again.";
                 }
             } catch(err) {
                 console.log(err);
-                takeTurn();
+                continue;
             }
             
             if (board[y][x] !== ' ') {
-                console.log("That cell is already selected.");
-                takeTurn();
+                console.log("\nThat cell is already selected.");
+                continue;
             }
-
+        
             board[y][x] = 'X';
+            if (getWinner() !== null) break;
 
-            let gameOver = () => {
-                if (getWinner() === 'Z') {
-                    console.log("The game was a draw!");
-                } else {
-                    console.log((getWinner() === 'X' ? "You're" : "The computer is") + " the winner!");
-                }
+            console.log("\nComputer is taking its turn...");
+            doComputersTurn();
+        } while (getWinner() === null);
 
-                console.log("Here's the final board: \n");
-                printBoard();
-                turnReader.close();
-            }
+        if (getWinner() === 'Z') {
+            console.log("\nThe game was a draw!");
+        } else {
+            console.log("\n" + (getWinner() === 'X' ? "You're" : "The computer is") + " the winner!");
+        }
 
-            if (getWinner() !== 'X') {
-                console.log("Computer is taking its turn...");
-                doComputersTurn();
-    
-                if (getWinner() === null) {
-                    takeTurn();
-                } else {
-                    gameOver();
-                }
-            } else {
-                gameOver();
-            }
-        });
-    }
-
-    takeTurn();
+        console.log("Here's the final board:\n");
+        printBoard();
+    } while (readline.question("\nPress Enter to play again or x + Enter to exit.") === "");
 };
 
 function doComputersTurn() {
