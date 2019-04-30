@@ -26,7 +26,7 @@ impl Program {
                     Err(_) => continue
                 }
 
-                let nums: Vec<&str> = input.split(",").collect();
+                let nums: Vec<&str> = input.split(',').collect();
                 if nums.len() != 2 {
                     println!("\nInvalid input!  Try again.");
                     continue;
@@ -48,14 +48,14 @@ impl Program {
                 }
 
                 self.board[y][x] = 'X';
-                if let Some(_) = self.get_winner() {
+                if self.get_winner().is_some() {
                     break;
                 }
 
                 println!("\nComputer is taking its turn...");
 
                 self.do_computers_turn();
-                if let Some(_) = self.get_winner() {
+                if self.get_winner().is_some() {
                     break;
                 }
             }
@@ -79,7 +79,7 @@ impl Program {
                 Err(_) => break
             }
 
-            if input.trim().len() > 0 {
+            if !input.trim().is_empty() {
                 break;
             }
         }
@@ -129,7 +129,7 @@ impl Program {
             }
         }
 
-        if self.get_available_cells().len() == 0 { Some('Z') } else { None }
+        if self.get_available_cells().is_empty() { Some('Z') } else { None }
     }
 
     fn print_board(&self) {
