@@ -4,16 +4,16 @@
        WORKING-STORAGE SECTION.
       * Tic-Tac-Toe game board; COLUMN and CELL are keywords, so shorten
            01 BOARD.
-               02 COLUM OCCURS 3 TIMES.
-                   03 CEL PIC X OCCURS 3 TIMES.
+               05 COLUM OCCURS 3 TIMES.
+                   10 CEL PIC X OCCURS 3 TIMES.
 
       * User coordinate input
-           01 COORD-INPUT PIC X(3).
+           01 COORD-INPUT PIC XXX.
 
       * Parsed coordinates
            01 COORDINATES.
-               02 X-COORD PIC 9.
-               02 Y-COORD PIC 9.
+               05 X-COORD PIC 9.
+               05 Y-COORD PIC 9.
 
       * Error flag for input validation
            01 INPUT-ERROR PIC 9.
@@ -28,8 +28,12 @@
       * Current date; used for RNG seeding
            01 CURRENT-DATE-DATA.
                05 FILLER PIC 9(14).
-               05 CURRENT-MILLISECONDS PIC 9(2).
+               05 CURRENT-MILLISECONDS PIC 99.
+
+           01 A-DARK-DAY-FOR-HUMANITY PIC 9(16).
        PROCEDURE DIVISION.
+           MOVE FUNCTION WHEN-COMPILED TO A-DARK-DAY-FOR-HUMANITY.
+
       * Seed RNG. MOVE " " TO WINNER is effectively a no-op.
            MOVE FUNCTION CURRENT-DATE TO CURRENT-DATE-DATA.
            IF FUNCTION RANDOM(CURRENT-MILLISECONDS) = 0

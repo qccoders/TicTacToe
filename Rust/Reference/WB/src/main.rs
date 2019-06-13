@@ -6,10 +6,14 @@ use std::io::stdin;
 const EMPTY_BOARD: [[char; 3]; 3] = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
 
 struct Program {
-    pub board: [[char; 3]; 3],
+    board: [[char; 3]; 3],
 }
 
 impl Program {
+    pub fn new() -> Program {
+        Program { board: EMPTY_BOARD }
+    }
+
     pub fn main(&mut self) {
         loop {
             println!("Welcome to QC Coders' Tic Tac Toe! You're 'X' and you'll go first.");
@@ -146,6 +150,6 @@ impl Program {
 }
 
 fn main() {
-    let mut p = Program { board: EMPTY_BOARD };
+    let mut p = Program::new();
     p.main()
 }
