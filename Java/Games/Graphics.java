@@ -54,5 +54,35 @@ public class Graphics {
         System.out.println("       TTTTTT         OOOOOOOOOOOOOOOOO  EEEEEEEEEEEEEEE");
         System.out.println("       TTTTTT         OOOOOOOOOOOOOOOOO  EEEEEEEEEEEEEEE");
     }
-
+    public static void XWINS() throws InterruptedException {
+        System.out.println("XX                     XX");
+        System.out.println("  XX                 XX");
+        System.out.println("    XX             XX");
+        System.out.println("      XX         XX");
+        System.out.println("        XX     XX");
+        System.out.println("          XX XX");
+        System.out.println("           XXX");
+        System.out.println("          XX XX");
+        System.out.println("        XX     XX");
+        System.out.println("      XX         XX");
+        System.out.println("    XX             XX");
+        System.out.println("  XX                 XX");
+        System.out.println("XX                     XX");
+        Graphics.displayGraphics();
+    }
+    public static void OWINS() throws InterruptedException {
+        System.out.println("O Wins");
+        System.out.println("OOOOOOOOOOOOOOOOO  ");
+        System.out.println("OOOOOOOOOOOOOOOOO  ");
+        System.out.println("OOOO         OOOO  ");
+        System.out.println("OOOO         OOOO  ");
+        System.out.println("OOOO         OOOO  ");
+        System.out.println("OOOO         OOOO  ");
+        System.out.println("OOOO         OOOO  ");
+        System.out.println("OOOO         OOOO  ");
+        System.out.println("OOOO         OOOO  ");
+        System.out.println("OOOOOOOOOOOOOOOOO  ");
+        System.out.println("OOOOOOOOOOOOOOOOO  ");
+        Graphics.displayGraphics();
+    }
 }
