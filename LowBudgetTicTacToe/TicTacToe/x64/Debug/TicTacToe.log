@@ -1,0 +1,3 @@
+﻿  GameBoard.cpp
+C:\Users\nhanf\Desktop\TicTacToe\TicTacToe\Src\GameBoard.cpp(157,17): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  TicTacToe.vcxproj -> C:\Users\nhanf\Desktop\TicTacToe\x64\Debug\TicTacToe.exe
