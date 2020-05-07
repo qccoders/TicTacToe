@@ -1,0 +1,8 @@
+﻿  GameBoard.cpp
+C:\Users\nhanf\Desktop\TicTacToe\TicTacToe\Src\GameBoard.cpp(157,17): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating code
+  1 of 117 functions ( 0.9%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  TicTacToe.vcxproj -> C:\Users\nhanf\Desktop\TicTacToe\x64\Release\TicTacToe.exe
